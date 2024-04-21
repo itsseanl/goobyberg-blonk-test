@@ -587,15 +587,19 @@ function Edit({
     value: "left"
   }, "Image Left, Content Right"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "right"
-  }, "Image Right, Content Left")), orientation == "right" ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
-    className: "test-text"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
-    label: "write your text",
-    value: attributes.text,
-    onChange: value => setAttributes({
-      text: value
-    })
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUploadCheck, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
+  }, "Image Right, Content Left")), orientation == "right" ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+    tagName: "p" // The tag here is the element output and editable in the admin
+    ,
+    value: attributes.text // Any existing content, either from the database or an attribute default
+    ,
+    allowedFormats: ["core/bold", "core/italic", "core/link"] // Allow the content to be made bold or italic, but do not allow other formatting options
+    ,
+    onChange: content => setAttributes({
+      text: content
+    }) // Store updated content as a block attribute
+    ,
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Heading...") // Display this text before any content has been added by the user
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUploadCheck, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
     onSelect: media => {
       setAttributes({
         imageAlt: media.alt,
@@ -619,15 +623,19 @@ function Edit({
     render: ({
       open
     }) => getImageButton(open)
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
-    className: "test-text"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
-    label: "write your text",
-    value: attributes.text,
-    onChange: value => setAttributes({
-      text: value
-    })
-  }))));
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+    tagName: "p" // The tag here is the element output and editable in the admin
+    ,
+    value: attributes.text // Any existing content, either from the database or an attribute default
+    ,
+    allowedFormats: ["core/bold", "core/italic", "core/link"] // Allow the content to be made bold or italic, but do not allow other formatting options
+    ,
+    onChange: content => setAttributes({
+      text: content
+    }) // Store updated content as a block attribute
+    ,
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Heading...") // Display this text before any content has been added by the user
+  })));
 }
 _s(Edit, "3K8Fhv+HkN8Y8Jyo3q95OwRM72M=", false, function () {
   return [_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps];
@@ -820,7 +828,9 @@ function save({
   console.log(attributes);
   return attributes.orientation == "right" ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, attributes.text), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+    value: attributes.text
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: attributes.imageUrl,
     alt: attributes.imageAlt
   })) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", {
@@ -828,7 +838,9 @@ function save({
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: attributes.imageUrl,
     alt: attributes.imageAlt
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, attributes.text));
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+    value: attributes.text
+  }));
 }
 
 const $ReactRefreshModuleId$ = __webpack_require__.$Refresh$.moduleId;
@@ -1938,7 +1950,7 @@ __webpack_require__.r(__webpack_exports__);
     if(true) {
       (function() {
         var localsJsonString = undefined;
-        // 1713734346383
+        // 1713736542247
         var cssReload = __webpack_require__(/*! ../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {});
         // only invalidate when locals change
         if (
@@ -1973,7 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
     if(true) {
       (function() {
         var localsJsonString = undefined;
-        // 1713719501535
+        // 1713736542238
         var cssReload = __webpack_require__(/*! ../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {});
         // only invalidate when locals change
         if (
@@ -11667,7 +11679,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/tru
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("bd7a41b3255883785f79")
+/******/ 		__webpack_require__.h = () => ("6e49d7421dd742d8a36f")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

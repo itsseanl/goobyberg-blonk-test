@@ -80,13 +80,20 @@ export default function Edit({ attributes, className, setAttributes }) {
 
 			{orientation == "right" ? (
 				<div>
-					<p className="test-text">
-						<TextControl
+					{/* <p className="test-text"> */}
+					{/* <TextControl
 							label="write your text"
 							value={attributes.text}
 							onChange={(value) => setAttributes({ text: value })}
-						/>
-					</p>
+						/> */}
+					<RichText
+						tagName="p" // The tag here is the element output and editable in the admin
+						value={attributes.text} // Any existing content, either from the database or an attribute default
+						allowedFormats={["core/bold", "core/italic", "core/link"]} // Allow the content to be made bold or italic, but do not allow other formatting options
+						onChange={(content) => setAttributes({ text: content })} // Store updated content as a block attribute
+						placeholder={__("Heading...")} // Display this text before any content has been added by the user
+					/>
+					{/* </p> */}
 					<MediaUploadCheck>
 						<MediaUpload
 							onSelect={(media) => {
@@ -110,13 +117,21 @@ export default function Edit({ attributes, className, setAttributes }) {
 							render={({ open }) => getImageButton(open)}
 						/>
 					</MediaUploadCheck>
-					<p className="test-text">
+					{/* <p className="test-text">
 						<TextControl
 							label="write your text"
 							value={attributes.text}
 							onChange={(value) => setAttributes({ text: value })}
 						/>
-					</p>
+					</p> */}
+
+					<RichText
+						tagName="p" // The tag here is the element output and editable in the admin
+						value={attributes.text} // Any existing content, either from the database or an attribute default
+						allowedFormats={["core/bold", "core/italic", "core/link"]} // Allow the content to be made bold or italic, but do not allow other formatting options
+						onChange={(content) => setAttributes({ text: content })} // Store updated content as a block attribute
+						placeholder={__("Heading...")} // Display this text before any content has been added by the user
+					/>
 				</div>
 			)}
 		</section>
