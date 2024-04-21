@@ -1,0 +1,25 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-create-block-test {
+	border: 1px dotted #f00;
+	background-color:#000;
+	max-width:1420px;
+	width:100%;
+	margin:auto;
+	display:flex;
+	flex-direction:Column;
+	select{
+		flex:1 0 auto;
+	}
+	div{
+		display:flex;
+		flex-wrap:nowrap;
+	}
+}
+
+
+
