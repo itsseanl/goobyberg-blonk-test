@@ -551,29 +551,21 @@ function Edit({
 }) {
   _s();
   //used to update edit screen orientation
-  const [orientation, setOrientation] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("left");
-  console.log(attributes);
-  console.log("test");
+  const [orientation, setOrientation] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(attributes.orientation);
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
+    className: orientation
+  });
   const getImageButton = openEvent => {
-    if (attributes.imageUrl) {
-      setAttributes();
-      return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-        src: attributes.imageUrl,
-        onClick: openEvent,
-        alt: attributes?.imageAlt,
-        className: "image test-image"
-      });
-    } else {
-      return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-        className: "button-container"
-      }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Button, {
-        onClick: openEvent,
-        className: "button button-large"
-      }, "Pick an image"));
-    }
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+      src: attributes.imageUrl,
+      onClick: openEvent,
+      alt: attributes?.imageAlt,
+      "data-imageid": attributes?.imageID,
+      className: `image wp-image${attributes?.imageID}`
+    });
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", {
-    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)()
+    ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("select", {
     value: attributes.orientation,
     onChange: e => {
@@ -587,7 +579,7 @@ function Edit({
     value: "left"
   }, "Image Left, Content Right"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "right"
-  }, "Image Right, Content Left")), orientation == "right" ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+  }, "Image Right, Content Left")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
     tagName: "p" // The tag here is the element output and editable in the admin
     ,
     value: attributes.text // Any existing content, either from the database or an attribute default
@@ -601,9 +593,12 @@ function Edit({
     placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Heading...") // Display this text before any content has been added by the user
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUploadCheck, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
     onSelect: media => {
+      console.log(media);
       setAttributes({
         imageAlt: media.alt,
-        imageUrl: media.url
+        imageUrl: media.url,
+        imageID: media.id,
+        imageSizes: media.sizes
       });
     },
     type: "image",
@@ -611,33 +606,9 @@ function Edit({
     render: ({
       open
     }) => getImageButton(open)
-  }))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUploadCheck, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
-    onSelect: media => {
-      setAttributes({
-        imageAlt: media.alt,
-        imageUrl: media.url
-      });
-    },
-    type: "image",
-    value: attributes.imageID,
-    render: ({
-      open
-    }) => getImageButton(open)
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
-    tagName: "p" // The tag here is the element output and editable in the admin
-    ,
-    value: attributes.text // Any existing content, either from the database or an attribute default
-    ,
-    allowedFormats: ["core/bold", "core/italic", "core/link"] // Allow the content to be made bold or italic, but do not allow other formatting options
-    ,
-    onChange: content => setAttributes({
-      text: content
-    }) // Store updated content as a block attribute
-    ,
-    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Heading...") // Display this text before any content has been added by the user
   })));
 }
-_s(Edit, "3K8Fhv+HkN8Y8Jyo3q95OwRM72M=", false, function () {
+_s(Edit, "i3YwHUkUCVhWh9F2DFuIXNeMAzk=", false, function () {
   return [_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps];
 });
 _c = Edit;
@@ -746,7 +717,12 @@ __webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/r
       attribute: "alt",
       selector: ".card__image"
     },
+    imageID: {
+      attribute: "data-imageid",
+      type: "number"
+    },
     orientation: {
+      attribute: "className",
       type: "string"
     }
   }
@@ -825,21 +801,18 @@ __webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/r
 function save({
   attributes
 }) {
-  console.log(attributes);
-  return attributes.orientation == "right" ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", {
-    ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
+  const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
+    className: attributes.orientation
+  });
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", {
+    ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
     value: attributes.text
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: attributes.imageUrl,
-    alt: attributes.imageAlt
-  })) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", {
-    ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: attributes.imageUrl,
-    alt: attributes.imageAlt
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
-    value: attributes.text
+    src: attributes?.imageUrl,
+    alt: attributes?.imageAlt,
+    class: `wp-image-${attributes?.imageID}`,
+    "data-imageid": attributes.imageID
   }));
 }
 
@@ -1950,7 +1923,7 @@ __webpack_require__.r(__webpack_exports__);
     if(true) {
       (function() {
         var localsJsonString = undefined;
-        // 1713736542247
+        // 1713751415915
         var cssReload = __webpack_require__(/*! ../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {});
         // only invalidate when locals change
         if (
@@ -1985,7 +1958,7 @@ __webpack_require__.r(__webpack_exports__);
     if(true) {
       (function() {
         var localsJsonString = undefined;
-        // 1713736542238
+        // 1713751386020
         var cssReload = __webpack_require__(/*! ../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {});
         // only invalidate when locals change
         if (
@@ -11679,7 +11652,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/tru
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("6e49d7421dd742d8a36f")
+/******/ 		__webpack_require__.h = () => ("28a49c5d97fa18dc0ecc")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

@@ -50,7 +50,12 @@ registerBlockType(metadata.name, {
 			attribute: "alt",
 			selector: ".card__image",
 		},
+		imageID: {
+			attribute: "data-imageid",
+			type: "number",
+		},
 		orientation: {
+			attribute: "className",
 			type: "string",
 		},
 	},

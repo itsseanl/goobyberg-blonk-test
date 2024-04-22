@@ -16,16 +16,19 @@ import { useBlockProps, RichText } from "@wordpress/block-editor";
  * @return {Element} Element to render.
  */
 export default function save({ attributes }) {
-	console.log(attributes);
-	return attributes.orientation == "right" ? (
-		<section {...useBlockProps.save()}>
+	const blockProps = useBlockProps.save({
+		className: attributes.orientation,
+	});
+
+	return (
+		<section {...blockProps}>
 			<RichText.Content value={attributes.text} />
-			<img src={attributes.imageUrl} alt={attributes.imageAlt} />
-		</section>
-	) : (
-		<section {...useBlockProps.save()}>
-			<img src={attributes.imageUrl} alt={attributes.imageAlt} />
-			<RichText.Content value={attributes.text} />
+			<img
+				src={attributes?.imageUrl}
+				alt={attributes?.imageAlt}
+				class={`wp-image-${attributes?.imageID}`}
+				data-imageid={attributes.imageID}
+			/>
 		</section>
 	);
 }

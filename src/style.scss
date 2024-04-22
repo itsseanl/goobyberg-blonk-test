@@ -9,9 +9,16 @@
 	background-color: #21759b;
 	color: #fff;
 	padding: 2px;
-
-	display:flex;
 	width:100%;
 	overflow:hidden;
 	margin:auto;
+	display:flex;
+
+	flex-wrap:wrap;
+	&.left{
+		flex-direction:row-reverse;
+	}
+	&.right{
+		flex-direction:row;
+	}
 }

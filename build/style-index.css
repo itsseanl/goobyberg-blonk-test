@@ -11,10 +11,17 @@
   background-color: #21759b;
   color: #fff;
   padding: 2px;
-  display: flex;
   width: 100%;
   overflow: hidden;
   margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.wp-block-create-block-test.left {
+  flex-direction: row-reverse;
+}
+.wp-block-create-block-test.right {
+  flex-direction: row;
 }
 
 /*# sourceMappingURL=style-index.css.map*/

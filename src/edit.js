@@ -39,33 +39,25 @@ import { useState } from "react";
 import { TextControl, Button } from "@wordpress/components";
 export default function Edit({ attributes, className, setAttributes }) {
 	//used to update edit screen orientation
-	const [orientation, setOrientation] = useState("left");
-	console.log(attributes);
-	console.log("test");
+	const [orientation, setOrientation] = useState(attributes.orientation);
+	const blockProps = useBlockProps({
+		className: orientation,
+	});
+
 	const getImageButton = (openEvent) => {
-		if (attributes.imageUrl) {
-			setAttributes();
-			return (
-				<img
-					src={attributes.imageUrl}
-					onClick={openEvent}
-					alt={attributes?.imageAlt}
-					className="image test-image"
-				/>
-			);
-		} else {
-			return (
-				<div className="button-container">
-					<Button onClick={openEvent} className="button button-large">
-						Pick an image
-					</Button>
-				</div>
-			);
-		}
+		return (
+			<img
+				src={attributes.imageUrl}
+				onClick={openEvent}
+				alt={attributes?.imageAlt}
+				data-imageid={attributes?.imageID}
+				className={`image wp-image${attributes?.imageID}`}
+			/>
+		);
 	};
 
 	return (
-		<section {...useBlockProps()}>
+		<section {...blockProps}>
 			<select
 				value={attributes.orientation}
 				onChange={(e) => {
@@ -78,62 +70,36 @@ export default function Edit({ attributes, className, setAttributes }) {
 				<option value="right">Image Right, Content Left</option>
 			</select>
 
-			{orientation == "right" ? (
-				<div>
-					{/* <p className="test-text"> */}
-					{/* <TextControl
+			{/* <p className="test-text"> */}
+			{/* <TextControl
 							label="write your text"
 							value={attributes.text}
 							onChange={(value) => setAttributes({ text: value })}
 						/> */}
-					<RichText
-						tagName="p" // The tag here is the element output and editable in the admin
-						value={attributes.text} // Any existing content, either from the database or an attribute default
-						allowedFormats={["core/bold", "core/italic", "core/link"]} // Allow the content to be made bold or italic, but do not allow other formatting options
-						onChange={(content) => setAttributes({ text: content })} // Store updated content as a block attribute
-						placeholder={__("Heading...")} // Display this text before any content has been added by the user
-					/>
-					{/* </p> */}
-					<MediaUploadCheck>
-						<MediaUpload
-							onSelect={(media) => {
-								setAttributes({ imageAlt: media.alt, imageUrl: media.url });
-							}}
-							type="image"
-							value={attributes.imageID}
-							render={({ open }) => getImageButton(open)}
-						/>
-					</MediaUploadCheck>
-				</div>
-			) : (
-				<div>
-					<MediaUploadCheck>
-						<MediaUpload
-							onSelect={(media) => {
-								setAttributes({ imageAlt: media.alt, imageUrl: media.url });
-							}}
-							type="image"
-							value={attributes.imageID}
-							render={({ open }) => getImageButton(open)}
-						/>
-					</MediaUploadCheck>
-					{/* <p className="test-text">
-						<TextControl
-							label="write your text"
-							value={attributes.text}
-							onChange={(value) => setAttributes({ text: value })}
-						/>
-					</p> */}
-
-					<RichText
-						tagName="p" // The tag here is the element output and editable in the admin
-						value={attributes.text} // Any existing content, either from the database or an attribute default
-						allowedFormats={["core/bold", "core/italic", "core/link"]} // Allow the content to be made bold or italic, but do not allow other formatting options
-						onChange={(content) => setAttributes({ text: content })} // Store updated content as a block attribute
-						placeholder={__("Heading...")} // Display this text before any content has been added by the user
-					/>
-				</div>
-			)}
+			<RichText
+				tagName="p" // The tag here is the element output and editable in the admin
+				value={attributes.text} // Any existing content, either from the database or an attribute default
+				allowedFormats={["core/bold", "core/italic", "core/link"]} // Allow the content to be made bold or italic, but do not allow other formatting options
+				onChange={(content) => setAttributes({ text: content })} // Store updated content as a block attribute
+				placeholder={__("Heading...")} // Display this text before any content has been added by the user
+			/>
+			{/* </p> */}
+			<MediaUploadCheck>
+				<MediaUpload
+					onSelect={(media) => {
+						console.log(media);
+						setAttributes({
+							imageAlt: media.alt,
+							imageUrl: media.url,
+							imageID: media.id,
+							imageSizes: media.sizes,
+						});
+					}}
+					type="image"
+					value={attributes.imageID}
+					render={({ open }) => getImageButton(open)}
+				/>
+			</MediaUploadCheck>
 		</section>
 	);
 }
